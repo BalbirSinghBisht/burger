@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "969750677990",
+    "project_id": "burger-app-f1151",
+    "storage_bucket": "burger-app-f1151.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969750677990:android:3a996bfe46dd7895a86e27",
+        "android_client_info": {
+          "package_name": "com.example.food_delivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "969750677990-aahmbki6oijtentmv8eoq59vtn9ba1vq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPFim0R_UmHO-545CyPTm0Abf76K_UUaA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "969750677990-aahmbki6oijtentmv8eoq59vtn9ba1vq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
