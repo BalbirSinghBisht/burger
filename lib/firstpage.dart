@@ -1,58 +1,102 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class FirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
       resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 65.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: Material(
+        borderRadius: BorderRadius.only(bottomRight: Radius.circular(300)),
+        color: Colors.lightBlue[200],
+          child: Column(
           children: <Widget>[
-            SizedBox(height: 10),
             Container(
-              padding: EdgeInsets.all(150),
-              width: 280,
-              decoration: new BoxDecoration(
-                color: Colors.transparent,
-                image: DecorationImage(
-                  image: new AssetImage(
-                    'assets/fastfood.png',
+              margin: EdgeInsets.only(top: 70),
+              height: 150,
+              width: 150,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+              ),
+              child: Align(
+                alignment: Alignment.center,
+                child: MaterialButton(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        'GO',
+                        style: TextStyle(color: Colors.lightBlue[200], fontSize: 84.0,fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
-                  fit: BoxFit.contain,
                 ),
-                shape: BoxShape.rectangle,
               ),
             ),
             Container(
+              margin: EdgeInsets.only(left: 200),
+              height: 90,
+              width: 90,
               decoration: BoxDecoration(
-                  color: Colors.amberAccent,
+              color: Colors.white,
+              shape: BoxShape.circle,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 50,left: 60),
+              height: 30,
+              width: 30,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 70),
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(30.0),
-                  boxShadow: [BoxShadow(blurRadius: 2.0, color: Colors.amberAccent)]),
-              width: 220,
+                  boxShadow: [BoxShadow(blurRadius: 2.0, color: Colors.white)]),
               child: Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.centerLeft,
                 child: MaterialButton(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Icon(
-                        FontAwesomeIcons.user,
-                        color: Colors.black,
-                      ),
-                      SizedBox(width: 20.0),
                       Text(
-                        'Sign in as User',
-                        style: TextStyle(color: Colors.black, fontSize: 18.0),
+                        'LOGIN',
+                        style: TextStyle(color: Colors.lightBlue[200], fontSize: 20.0,fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
                   onPressed: () {
                     Navigator.of(context).pushNamed('/signin');
+                  },
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 40),
+              margin: EdgeInsets.only(top: 10,left: 20,right: 20),
+              decoration: BoxDecoration(
+                  color: Colors.lightBlue[200],
+                  borderRadius: BorderRadius.circular(30.0),
+                  boxShadow: [BoxShadow(blurRadius: 2.0, color: Colors.white)]),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: MaterialButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'REGISTER',
+                        style: TextStyle(color: Colors.white, fontSize: 20.0,fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/signup');
                   },
                 ),
               ),

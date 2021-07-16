@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import './profile.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -18,160 +15,134 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
+      backgroundColor: Colors.lightBlue[200],
       resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 1.0),
+      body: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0),
+          topRight: Radius.circular(40.0))),
+        margin: EdgeInsets.only(top: 100),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.all(45),
-              width: 330,
-              decoration: new BoxDecoration(
-                color: Colors.transparent,
-                image: DecorationImage(
-                  image: new AssetImage(
-                    'assets/fastfood.png',
-                  ),
-                  fit: BoxFit.contain,
+              alignment: Alignment.topLeft,
+              margin: EdgeInsets.only(left:15),
+              child: GestureDetector(
+                child: Icon(
+                  CupertinoIcons.clear_circled_solid,
+                  color: Colors.lightBlue[200],
+                  size: 35,
                 ),
-                shape: BoxShape.rectangle,
+                onTap: () {
+                  Navigator.pop(context);
+                },
               ),
             ),
             Container(
+              margin: EdgeInsets.symmetric(vertical: 60),
+              height: 130,
+              width: 130,
               decoration: BoxDecoration(
-                  color: Colors.amberAccent,
-                  borderRadius: BorderRadius.circular(30.0)),
-              width: 225.0,
+                color: Colors.lightBlue[200],
+                shape: BoxShape.circle,
+              ),
               child: Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.center,
                 child: MaterialButton(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Icon(
-                          FontAwesomeIcons.google,
-                          color: Colors.black54,
-                        ),
-                        SizedBox(
-                          width: 10.0,
-                        ),
-                        Text(
-                          'Sign in With Google',
-                          style: TextStyle(color: Colors.black, fontSize: 17.0),
-                        ),
-                      ],
-                    ),
-                    onPressed: () {
-                      final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-                      final GoogleSignIn _googleSignIn = new GoogleSignIn();
-
-                      Future<FirebaseUser> _signIn(BuildContext context) async {
-                        final GoogleSignInAccount googleUser =
-                            await _googleSignIn.signIn();
-                        final GoogleSignInAuthentication googleAuth =
-                            await googleUser.authentication;
-
-                        final AuthCredential credential =
-                            GoogleAuthProvider.getCredential(
-                                idToken: googleAuth.idToken,
-                                accessToken: googleAuth.accessToken);
-
-                        FirebaseUser userDetails = await _firebaseAuth
-                            .signInWithCredential(credential);
-                        ProviderDetails providerInfo =
-                            new ProviderDetails(userDetails.providerId);
-
-                        List<ProviderDetails> providerData =
-                            new List<ProviderDetails>();
-                        providerData.add(providerInfo);
-
-                        UserDetails details = new UserDetails(
-                            userDetails.providerId,
-                            userDetails.displayName,
-                            userDetails.email,
-                            userDetails.photoUrl,
-                            providerData);
-
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    new ProfilePage(detailsUser: details)));
-                      }
-
-                      _signIn(context);
-                    }),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        'LOGIN',
+                        style: TextStyle(color: Colors.white, fontSize: 32.0,fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Card(
-              color: Colors.white70,
-              elevation: 15.0,
-              child: Padding(
-                padding: EdgeInsets.all(20.0),
+
+            Container(
+                padding: EdgeInsets.all(5),
                 child: Column(
                   children: <Widget>[
-                    TextField(
+                    TextFormField(
                       controller: emailController,
                       decoration: InputDecoration(
-                        hintText: "Your Email ",
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        prefixIcon: Icon(
+                          Icons.email,
+                          color: Colors.lightBlueAccent,
+                        ),
+                        hintText: "EMAIL",
                         hintStyle: TextStyle(
                           color: Colors.black54,
                           fontSize: 18.0,
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    TextField(
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                        hintText: "Password",
-                        hintStyle: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 18.0,
-                        ),
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _toggleVisibility = !_toggleVisibility;
-                            });
-                          },
-                          icon: _toggleVisibility
-                              ? Icon(Icons.visibility_off)
-                              : Icon(Icons.visibility),
-                        ),
-                      ),
-                      obscureText: _toggleVisibility,
                     ),
                   ],
                 ),
               ),
+          Container(
+            padding: EdgeInsets.all(5),
+            margin: EdgeInsets.only(top: 5,bottom: 50),
+            child: Column(
+              children: <Widget>[
+              TextFormField(
+              controller: passwordController,
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                prefixIcon: Icon(
+                  Icons.lock,
+                  color: Colors.lightBlueAccent,
+                ),
+                hintText: "PASSWORD",
+                hintStyle: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 18.0,
+                ),
+                suffixIcon: IconButton(
+                  color: Colors.lightBlueAccent,
+                  onPressed: () {
+                    setState(() {
+                      _toggleVisibility = !_toggleVisibility;
+                    });
+                  },
+                  icon: _toggleVisibility
+                      ? Icon(Icons.visibility_off)
+                      : Icon(Icons.visibility),
+                ),
+              ),
+              obscureText: _toggleVisibility,
             ),
-            SizedBox(
-              height: 30.0,
-            ),
+          ],
+        ),
+      ),
             GestureDetector(
                 child: Container(
-                  height: 50.0,
-                  width: 250,
+                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  margin: EdgeInsets.only(top: 50,left: 20,right: 20,bottom: 80),
                   decoration: BoxDecoration(
-                      color: Colors.amberAccent,
-                      borderRadius: BorderRadius.circular(25.0),
-                      boxShadow: [
-                        BoxShadow(blurRadius: 3, color: Colors.amberAccent)
-                      ]),
-                  child: Center(
-                    child: Text(
-                      "Log In",
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w800,
+                      color: Colors.lightBlue[200],
+                      borderRadius: BorderRadius.circular(30.0),
+                      boxShadow: [BoxShadow(blurRadius: 2.0, color: Colors.white)]),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: MaterialButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'LOGIN',
+                            style: TextStyle(color: Colors.white, fontSize: 20.0,fontWeight: FontWeight.bold),
+                          )
+                        ],
                       ),
                     ),
                   ),
@@ -187,31 +158,6 @@ class _SignInPageState extends State<SignInPage> {
                     print(e);
                   });
                 }),
-            Divider(
-              height: 20.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Don't have an account?",
-                  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 18.0),
-                ),
-                SizedBox(width: 10.0),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/signup');
-                  },
-                  child: Text(
-                    "Sign up",
-                    style: TextStyle(
-                        color: Colors.black87,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 18.0),
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),

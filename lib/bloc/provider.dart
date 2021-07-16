@@ -1,7 +1,6 @@
 import '../model/fooditem.dart';
 
 class CartProvider {
-  //couterProvider only consists of a counter and a method which is responsible for increasing the value of count
   List<FoodItem> foodItems = [];
 
   List<FoodItem> addToList(FoodItem foodItem) {

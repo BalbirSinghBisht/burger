@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 class UserManagement {
   storeNewUser(user, context) {
     Firestore.instance.collection('Users').add({
+      'user': user.user,
       'email': user.email,
        'uid': user.uid
     }).then((value) {

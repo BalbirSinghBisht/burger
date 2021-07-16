@@ -1,6 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/services/usermanagement.dart';
-import './sigin_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 final FirebaseAuth mAuth = FirebaseAuth.instance;
@@ -11,6 +11,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  TextEditingController userController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
@@ -19,97 +20,158 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
+      backgroundColor: Colors.lightBlueAccent[200],
       resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 1.0),
+      body: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0),
+            topRight: Radius.circular(40.0))),
+        margin: EdgeInsets.only(top: 100),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.all(45),
-              width: 330,
-              decoration: new BoxDecoration(
-                color: Colors.transparent,
-                image: DecorationImage(
-                  image: new AssetImage(
-                    'assets/fastfood.png',
+              alignment: Alignment.topLeft,
+              margin: EdgeInsets.only(left:15),
+              child: GestureDetector(
+                child: Icon(
+                  CupertinoIcons.clear_circled_solid,
+                  color: Colors.lightBlue[200],
+                  size: 35,
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 60),
+              height: 130,
+              width: 130,
+              decoration: BoxDecoration(
+                color: Colors.lightBlue[200],
+                shape: BoxShape.circle,
+              ),
+              child: Align(
+                alignment: Alignment.center,
+                child: MaterialButton(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        'REGI \n STER',
+                        style: TextStyle(color: Colors.white, fontSize: 32.0,fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
-                  fit: BoxFit.contain,
-                ),
-                shape: BoxShape.rectangle,
-              ),
-            ),
-            Card(
-              color: Colors.white70,
-              elevation: 5.0,
-              child: Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    TextField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        hintText: "Email",
-                        hintStyle: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 18.0,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    TextField(
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                        hintText: "Password more than 10",
-                        hintStyle: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 18.0,
-                        ),
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _toggleVisibility = !_toggleVisibility;
-                            });
-                          },
-                          icon: _toggleVisibility
-                              ? Icon(Icons.visibility_off)
-                              : Icon(Icons.visibility),
-                        ),
-                      ),
-                      obscureText: _toggleVisibility,
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                  ],
                 ),
               ),
             ),
-            SizedBox(
-              height: 30.0,
+            Container(
+              padding: EdgeInsets.all(5),
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    controller: userController,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.lightBlue[200], width: 2.0),
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      prefixIcon: Icon(
+                        Icons.person,
+                        color: Colors.lightBlue[200],
+                      ),
+                      hintText: "DISPLAY NAME",
+                      hintStyle: TextStyle(
+                        color: Colors.lightBlue[200],
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(5),
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    controller: emailController,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.lightBlue[200], width: 2.0),
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      prefixIcon: Icon(
+                        Icons.email,
+                        color: Colors.lightBlue[200],
+                      ),
+                      hintText: "EMAIL",
+                      hintStyle: TextStyle(
+                        color: Colors.lightBlue[200],
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(5),
+              margin: EdgeInsets.only(bottom: 40),
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    controller: passwordController,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.lightBlue[200], width: 2.0),
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: Colors.lightBlue[200],
+                      ),
+                      hintText: "PASSWORD",
+                      hintStyle: TextStyle(
+                        color: Colors.lightBlue[200],
+                        fontSize: 18.0,
+                      ),
+                      suffixIcon: IconButton(
+                        color: Colors.lightBlue[200],
+                        onPressed: () {
+                          setState(() {
+                            _toggleVisibility = !_toggleVisibility;
+                          });
+                        },
+                        icon: _toggleVisibility
+                            ? Icon(Icons.visibility_off)
+                            : Icon(Icons.visibility),
+                      ),
+                    ),
+                    obscureText: _toggleVisibility,
+                  ),
+                ],
+              ),
             ),
             GestureDetector(
                 child: Container(
-                  height: 50.0,
-                  width: 250,
+                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  margin: EdgeInsets.only(top: 50,left: 20,right: 20,bottom: 40),
                   decoration: BoxDecoration(
-                      color: Colors.amberAccent,
-                      borderRadius: BorderRadius.circular(25.0),
-                      boxShadow: [
-                        BoxShadow(blurRadius: 2, color: Colors.amberAccent)
-                      ]),
-                  child: Center(
-                    child: Text(
-                      "Sign Up",
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w800,
+                      color: Colors.lightBlue[200],
+                      borderRadius: BorderRadius.circular(30.0),
+                      boxShadow: [BoxShadow(blurRadius: 2.0, color: Colors.white)]),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: MaterialButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'CREATE ACCOUNT',
+                            style: TextStyle(color: Colors.white, fontSize: 20.0,fontWeight: FontWeight.bold),
+                          )
+                        ],
                       ),
                     ),
                   ),
@@ -125,32 +187,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     print(e);
                   });
                 }),
-            Divider(
-              height: 20.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Already have an account?",
-                  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 18.0),
-                ),
-                SizedBox(width: 20.0),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) => SignInPage()));
-                  },
-                  child: Text(
-                    "Log In",
-                    style: TextStyle(
-                        color: Colors.black87,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 18.0),
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),

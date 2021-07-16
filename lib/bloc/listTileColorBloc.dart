@@ -6,21 +6,16 @@ import 'package:rxdart/rxdart.dart';
 
 class ColorBloc extends BlocBase {
   ColorBloc();
-
-//Stream that receives a number and changes the count;
   var _colorController = BehaviorSubject<Color>.seeded(Colors.lightBlueAccent);
 
-//output
+  //output
   Stream<Color> get colorStream => _colorController.stream;
-
 //input
   Sink<Color> get colorSink => _colorController.sink;
 
   setColor(Color color) {
     colorSink.add(color);
   }
-
-//dispose will be called automatically by closing its streams
   @override
   void dispose() {
     _colorController.close();

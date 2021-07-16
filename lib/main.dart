@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/firstpage.dart';
+import 'package:food_delivery/account.dart';
 import './loginpage/sigin_page.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import './bloc/cartListBloc.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import './model/fooditem.dart';
@@ -15,7 +16,6 @@ void main() {
   debugDefaultTargetPlatformOverride =TargetPlatform.fuchsia;
    runApp(MyApp());
 }
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
             '/homepage': (BuildContext context) => new Home(),
             '/signin': (BuildContext context) => new SignInPage(),
             '/firstpage': (BuildContext context) => new FirstPage(),
+            '/account': (BuildContext context) => new DrawerExample(),
           }),
     );
   }
@@ -45,51 +46,81 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  getCurrentUser() async {
+    final FirebaseUser user = await _auth.currentUser();
+    final uid = user.uid;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
+      backgroundColor: Colors.lightBlue[200],
       resizeToAvoidBottomInset: false,
       drawer: Drawer(
         child: Column(
           children: <Widget>[
             Container(
               width: double.infinity,
-              padding: EdgeInsets.all(20),
-              color: Colors.lightBlueAccent,
+              padding: EdgeInsets.only(top:50,bottom: 40),
+              color: Colors.lightGreen,
               child: Center(
-                child: Column(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      width: 100,
-                      height: 100,
-                      margin: EdgeInsets.only(top: 30, bottom: 10),
+                      width: 40,
+                      height: 40,
+                      margin: EdgeInsets.only(left: 10,right: 18),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             image: NetworkImage(
                                 'https://www.pngfind.com/pngs/m/470-4703547_icon-user-icon-hd-png-download.png'),
-                            fit: BoxFit.contain),
+                            fit: BoxFit.cover),
                       ),
                     ),
                     Text(
-                      'Name: user',
-                      style: TextStyle(fontSize: 22, color: Colors.black87),
+                      '9489303930',
+                      style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
-                    Text(
-                      'Email: user@gmail.com',
-                      style: TextStyle(color: Colors.black87),
+                    Container(
+                      margin: EdgeInsets.only(left: 70),
+                      child: GestureDetector(
+                        child: Icon(
+                          CupertinoIcons.chevron_forward,
+                          color: Colors.white,
+                          size: 25,
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, '/account');
+                        }
+                      ),
                     )
                   ],
                 ),
               ),
             ),
             ListTile(
-              leading: Icon(Icons.settings),
+              leading: Icon(Icons.menu),
               title: Text(
-                'Setting',
-                style: TextStyle(fontSize: 18),
+                'Order History',
+                style: TextStyle(fontSize: 18,color: Colors.black54),
+              ),
+              onTap: null,
+            ),
+            ListTile(
+              leading: Icon(Icons.phone),
+              title: Text(
+                'Help & Support',
+                style: TextStyle(fontSize: 18,color: Colors.black54),
+              ),
+              onTap: null,
+            ),
+            ListTile(
+              leading: Icon(Icons.autorenew),
+              title: Text(
+                'Update',
+                style: TextStyle(fontSize: 18,color: Colors.black54),
               ),
               onTap: null,
             ),
@@ -97,18 +128,9 @@ class _HomeState extends State<Home> {
               leading: Icon(Icons.arrow_back),
               title: Text(
                 'Logout',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 18,color: Colors.black54),
               ),
-              onTap: () {
-                _googleSignIn.signOut();
-                print('User Signed Out');
-                Navigator.of(context).pop();
-                FirebaseAuth.instance.signOut().then((value) {
-                  Navigator.of(context).pushReplacementNamed('/firstpage');
-                }).catchError((e) {
-                  print(e);
-                });
-              },
+              onTap: () => _popupDialog(context),
             ),
           ],
         ),
@@ -131,7 +153,24 @@ class _HomeState extends State<Home> {
     );
   }
 }
-
+void _popupDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          insetPadding: EdgeInsets.all(20),
+          content: Text('Are you sure you want to logout ?'),
+          actions: <Widget>[
+            FlatButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('No')),
+            FlatButton(
+                onPressed: () => Navigator.of(context).pushReplacementNamed('/account'),
+                child: Text('Yes,Logout')),
+          ],
+        );
+      });
+}
 class ItemContainer extends StatelessWidget {
   ItemContainer({
     @required this.foodItem,
