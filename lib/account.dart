@@ -109,7 +109,7 @@ class AppBarBack extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.center,
                             child: MaterialButton(
-                              child: Row(
+                              child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Text(
