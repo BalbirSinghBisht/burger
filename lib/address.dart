@@ -29,7 +29,7 @@ class AddressBar extends StatelessWidget {
               onPressed:() => Navigator.of(context).pushNamed('/drawer'),
           )
       ),
-      body: ListView(
+      body: Column(
           children: <Widget>[
             Container(
                 padding: EdgeInsets.only(top:10),
@@ -101,32 +101,29 @@ class AddressBar extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.all(50),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.white,
-                              boxShadow: [BoxShadow(blurRadius: 4.0, color: Colors.cyanAccent)]),
-                          child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: MaterialButton(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    'ADD ADDRESS',
-                                    style: TextStyle(color: Colors.cyanAccent, fontSize: 20.0,fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              ),
-                              onPressed: () => Navigator.of(context).pushNamed('/home'),
-                            ),
-                          ),
-                        ),
+
                       ]
                   ),
                 )
             ),
+            Container(
+                alignment: Alignment.bottomCenter,
+                margin: EdgeInsets.only(top: 300,left: 20,right: 20),
+                child: MaterialButton(
+                  color: Colors.grey,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Text(
+                        'ADD ADDRESS',
+                        style: TextStyle(color: Colors.white, fontSize: 20.0,fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                  onPressed: () => Navigator.of(context).pushNamed('/home'),
+                ),
+              ),
           ]),
     );
   }
