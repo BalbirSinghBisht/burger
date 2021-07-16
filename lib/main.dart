@@ -165,7 +165,7 @@ void _popupDialog(BuildContext context) {
                 onPressed: () => Navigator.of(context).pop(),
                 child: Text('No')),
             FlatButton(
-                onPressed: () => Navigator.of(context).pushReplacementNamed('/account'),
+                onPressed: () => Navigator.of(context).pushReplacementNamed('/firstpage'),
                 child: Text('Yes,Logout')),
           ],
         );
